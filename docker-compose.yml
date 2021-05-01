@@ -1,0 +1,72 @@
+version: "3.9"  # optional since v1.27.0
+
+networks:
+  metrics:
+    external: false
+
+volumes:
+  influxdb2config:
+  influxdb2data:
+
+services:
+  influxdb2:
+    image: influxdb:2.0
+    container_name: poc_artillery_influx_db_2
+    restart: always
+    environment:
+      # mandatory for automatic setup
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=poc-organization
+      - DOCKER_INFLUXDB_INIT_BUCKET=poc-artillery.io
+      # optional
+      - DOCKER_INFLUXDB_INIT_RETENTION=1w # 1 week
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-auth-token
+    networks:
+      - metrics
+    ports:
+      - 8086:8086
+    volumes:
+      - type: volume # config
+        source: influxdb2config
+        target: /etc/influxdb2
+      - type: volume # data
+        source: influxdb2data
+        target: /var/lib/influxdb2 
+
+  telegraf:
+    image: telegraf:1.18
+    container_name: poc_artillery_telegraf
+    depends_on:
+      - influxdb2
+    restart: always
+    environment:
+      - INFLUX_DB2_HOST_ADDRESS=influxdb2           # name of InfluxDB container inside a Docker network (metrics)
+      - INFLUX_DB2_TOKEN=my-super-secret-auth-token # do not use admin token for other than demo purposes
+      - INFLUX_DB2_ORGANIZATION=poc-organization    # destination organization
+      - INFLUX_DB2_BUCKET=poc-artillery.io          # destination bucket
+    networks:
+      - metrics
+    ports:
+      - 8092:8092/udp
+      - 8094:8094/tcp
+      - 8125:8125/udp
+    volumes:
+      - type: bind # Telegraf configuration file
+        source: ./docker/telegraf/telegraf.conf
+        target: /etc/telegraf/telegraf.conf
+
+  grafana:
+    image: grafana/grafana:7.5.5
+    container_name: poc_artillery_grafana
+    depends_on:
+      - influxdb2
+      - telegraf
+    restart: always
+    # environment:
+    networks:
+      - metrics
+    ports:
+      - 3000:3000/tcp
+    # volumes:

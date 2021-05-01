@@ -1,0 +1,34 @@
+config:
+  target: "http://localhost:5000"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 60
+      arrivalRate: 5
+      rampTo: 20
+      name: Ramp up load
+    - duration: 60
+      arrivalRate: 20
+      name: Sustained load
+    - duration: 60
+      arrivalRate: 20
+      rampTo: 5
+      name: Reduce load
+    - duration: 60
+      arrivalRate: 5
+      name: Cool down
+
+  plugins:
+    publish-metrics:
+      - type: influxdb-statsd # https://artillery.io/docs/guides/plugins/plugin-publish-metrics.html#InfluxDB-Telegraf
+        event:
+          priority: low
+          tags:
+            - "testId:weather-forecast"
+
+scenarios:
+  - name: "Get forecast"
+    flow:
+      - get:
+          url: "/weatherForecast"
