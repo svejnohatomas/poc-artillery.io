@@ -19,7 +19,7 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
    - password: `admin`
 
 3. Connect Grafana to Influx DB
-   - Go to [Add data source](http://localhost:3000/datasources/new) and select InfluxDB and configure the following
+   - Go to [Add data source](http://localhost:3000/datasources/new), select InfluxDB and configure the following
 
       ```yaml
       Query Language: Flux # InfluxDB 2.0
