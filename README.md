@@ -8,7 +8,6 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
 ## Prerequisite
 - [Docker](https://www.docker.com/)
 - [Node.js](https://nodejs.org/en/)
-- [.NET Core 3.1 LTS](https://dotnet.microsoft.com/download/dotnet/3.1)
 
 ## Run and setup testing infrastructure
 1. Run Docker Compose: ```docker-compose up -d```
