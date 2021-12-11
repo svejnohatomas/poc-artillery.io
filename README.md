@@ -12,7 +12,7 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
 
 ## Run and setup testing infrastructure
 1. Run Docker Compose: ```docker-compose up -d```
-   - This will run [InfluxDB 2.0](http://localhost:8086), Telegraf and [Grafana](http://localhost:3000/)
+   - This will run [InfluxDB 2.0](http://localhost:8086), Telegraf, [Grafana](http://localhost:3000/) and a [Weather Forecast API](http://localhost:5000/weatherForecast)
 
 2. Go to your [Grafana](http://localhost:3000/) and log in
    - username: `admin`
@@ -127,10 +127,6 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
           - Maximum latency
             - RegEx: `value.+`
             - Display name: `Number of requests`
-
-## Build and Run API
-1. Build: ```dotnet build```
-2. Run: ```dotnet run --project ./src/WebAPI/WebAPI.csproj```
 
 ## Run Tests
 1. Install dependencies: ```npm install```
