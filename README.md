@@ -128,8 +128,8 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
             - Display name: `Number of requests`
 
 ## Run Tests
-1. Install dependencies: ```npm install```
-2. Run tests: ```npm run weather-forecast```
+1. Install dependencies in folder test/performance-testing/: ```npm install```
+2. Run tests in same folder: ```npm run weather-forecast```
 
 # Authors
 - Tomas Svejnoha
