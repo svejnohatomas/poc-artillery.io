@@ -7,17 +7,17 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
 
 ## Prerequisite
 - [Docker](https://www.docker.com/)
-- [Node.js](https://nodejs.org/en/)
+- [Node.js](https://nodejs.org/en/) (tested with Node.js 16 LTS)
 
 ## Run and setup testing infrastructure
 1. Run Docker Compose: ```docker-compose up -d```
    - This will run [InfluxDB 2.0](http://localhost:8086), Telegraf, [Grafana](http://localhost:3000/) and a [Weather Forecast API](http://localhost:5000/weatherForecast)
 
-2. Go to your [Grafana](http://localhost:3000/) and log in
+1. Go to your [Grafana](http://localhost:3000/) and log in
    - username: `admin`
    - password: `admin`
 
-3. Connect Grafana to Influx DB
+1. Connect Grafana to Influx DB
    - Go to [Add data source](http://localhost:3000/datasources/new), select InfluxDB and configure the following
 
       ```yaml
@@ -32,7 +32,7 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
         Default Bucket: poc-artillery.io
       ```
 
-4. Create a new Grafana Dashboard (_you can find the finished dashboard [here](./templates/grafana/dashboard-weather-forecast.json)_)
+1. Create a new Grafana Dashboard (_you can find the finished dashboard [here](./templates/grafana/dashboard-weather-forecast.json)_)
     - Go to [Dashboards](http://localhost:3000/dashboards) and click [New Dashboard](http://localhost:3000/dashboard/new)
     - Click `Add an empty panel`
       - **Responses**
@@ -128,8 +128,12 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
             - Display name: `Number of requests`
 
 ## Run Tests
+1. Go to test folder: ```cd .\test\performance-testing\```
 1. Install dependencies: ```npm install```
-2. Run tests: ```npm run weather-forecast```
+1. Run tests: ```npm run weather-forecast```
+
+> You should now see your [Artillery output in Grafana](http://localhost:3000/).  
+> If you can't see anything in Grafana, [check InfluxDB](http://localhost:8086/) bucket (Data/Buckets/poc-artillery.io).
 
 # Authors
 - Tomas Svejnoha
