@@ -43,6 +43,7 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
           ```
           from(bucket: "poc-artillery.io")
             |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+            |> filter(fn: (r) => r["testId"] == "weather-forecast")
             |> filter(fn: (r) =>
                   r["_measurement"] =~ /artillery_http_codes_1[0-9]{2}/ or
                   r["_measurement"] =~ /artillery_http_codes_2[0-9]{2}/ or
@@ -74,6 +75,7 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
           ```
           from(bucket: "poc-artillery.io")
             |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+            |> filter(fn: (r) => r["testId"] == "weather-forecast")
             |> filter(fn: (r) =>
                   r["_measurement"] == "artillery_http_response_time_max" or
                   r["_measurement"] == "artillery_http_response_time_median" or
@@ -111,6 +113,7 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
           ```
           from(bucket: "poc-artillery.io")
             |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+            |> filter(fn: (r) => r["testId"] == "weather-forecast")
             |> filter(fn: (r) => r["_measurement"] == "artillery_http_request_rate")
             |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
             |> yield(name: "mean")

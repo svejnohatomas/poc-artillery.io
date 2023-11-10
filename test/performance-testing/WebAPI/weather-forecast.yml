@@ -22,10 +22,11 @@ config:
   plugins:
     publish-metrics:
       - type: influxdb-statsd # https://artillery.io/docs/guides/plugins/plugin-publish-metrics.html#InfluxDB-Telegraf
+        tags:
+          - "testId:weather-forecast"
+          - "reporterType:influxdb-statsd"
         event:
           priority: low
-          tags:
-            - "testId:weather-forecast"
 
 scenarios:
   - name: "Get forecast"

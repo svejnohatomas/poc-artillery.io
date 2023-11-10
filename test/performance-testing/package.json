@@ -11,6 +11,6 @@
   "license": "GPL-3.0 License",
   "dependencies": {
     "artillery": "^2.0.0-38",
-    "artillery-plugin-publish-metrics": "^2.1.0"
+    "artillery-plugin-publish-metrics": "^2.8.0"
   }
 }
