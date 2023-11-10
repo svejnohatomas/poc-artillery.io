@@ -44,35 +44,29 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
           from(bucket: "poc-artillery.io")
             |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
             |> filter(fn: (r) =>
-                  r["_measurement"] == "artillery_response_1xx" or
-                  r["_measurement"] == "artillery_response_2xx" or
-                  r["_measurement"] == "artillery_response_3xx" or
-                  r["_measurement"] == "artillery_response_4xx" or
-                  r["_measurement"] == "artillery_response_5xx")
+                  r["_measurement"] =~ /artillery_http_codes_1[0-9]{2}/ or
+                  r["_measurement"] =~ /artillery_http_codes_2[0-9]{2}/ or
+                  r["_measurement"] =~ /artillery_http_codes_3[0-9]{2}/ or
+                  r["_measurement"] =~ /artillery_http_codes_4[0-9]{2}/ or
+                  r["_measurement"] =~ /artillery_http_codes_5[0-9]{2}/)
             |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
             |> yield(name: "mean")
           ```
 
         - Overrides (Fields with name matching regex)
-          - 1xx Responses
-            - RegEx: `artillery_response_1xx.+`
-            - Display name: `1xx`
-          - 2xx Responses
-            - RegEx: `artillery_response_2xx.+`
-            - Display name: `2xx`
-          - 3xx Responses
-            - RegEx: `artillery_response_3xx.+`
-            - Display name: `3xx`
-          - 4xx Responses
-            - RegEx: `artillery_response_4xx.+`
-            - Display name: `4xx`
-          - 5xx Responses
-            - RegEx: `artillery_response_5xx.+`
-            - Display name: `5xx`
+          - 200 Responses
+            - RegEx: `artillery_http_codes_200.+`
+            - Display name: `200`
+          - 400 Responses
+            - RegEx: `artillery_http_codes_400.+`
+            - Display name: `400`
+          - 404 Responses
+            - RegEx: `artillery_http_codes_404.+`
+            - Display name: `404`
 
-      - **Latency**
+      - **HTTP Response Time (Latency)**
         - Panel (Settings)
-          - Panel title: `Latency`
+          - Panel title: `HTTP Response Time (Latency)`
         - Field (Standard options)
           - Unit: `milliseconds (ms)` (under _Time_)
         - Query
@@ -81,30 +75,30 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
           from(bucket: "poc-artillery.io")
             |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
             |> filter(fn: (r) =>
-                  r["_measurement"] == "artillery_latency_max" or
-                  r["_measurement"] == "artillery_latency_median" or
-                  r["_measurement"] == "artillery_latency_min" or
-                  r["_measurement"] == "artillery_latency_p95" or
-                  r["_measurement"] == "artillery_latency_p99")
+                  r["_measurement"] == "artillery_http_response_time_max" or
+                  r["_measurement"] == "artillery_http_response_time_median" or
+                  r["_measurement"] == "artillery_http_response_time_min" or
+                  r["_measurement"] == "artillery_http_response_time_p95" or
+                  r["_measurement"] == "artillery_http_response_time_p99")
             |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
             |> yield(name: "mean")
           ```
 
         - Overrides (Fields with name matching regex)
           - Maximum latency
-            - RegEx: `artillery_latency_max.+`
+            - RegEx: `artillery_http_response_time_max.+`
             - Display name: `Maximum`
           - Median latency
-            - RegEx: `artillery_latency_median.+`
+            - RegEx: `artillery_http_response_time_median.+`
             - Display name: `Median`
           - Minimum latency
-            - RegEx: `artillery_latency_min.+`
+            - RegEx: `artillery_http_response_time_min.+`
             - Display name: `Minimum`
           - 95th percentile latency
-            - RegEx: `artillery_latency_p95.+`
+            - RegEx: `artillery_http_response_time_p95.+`
             - Display name: `95th percentile latency`
           - 99th percentile latency
-            - RegEx: `artillery_latency_p99.+`
+            - RegEx: `artillery_http_response_time_p99.+`
             - Display name: `99th percentile latency`
 
       - **Traffic**
@@ -117,7 +111,7 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
           ```
           from(bucket: "poc-artillery.io")
             |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
-            |> filter(fn: (r) => r["_measurement"] == "artillery_rps_mean")
+            |> filter(fn: (r) => r["_measurement"] == "artillery_http_request_rate")
             |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
             |> yield(name: "mean")
           ```
