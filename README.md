@@ -7,7 +7,7 @@ A Proof of Concept for using [Artillery](https://artillery.io/) for backend perf
 
 ## Prerequisite
 - [Docker](https://www.docker.com/)
-- [Node.js](https://nodejs.org/en/) (tested with Node.js 16 LTS)
+- [Node.js](https://nodejs.org/en/) (tested with Node.js 20 LTS)
 
 ## Run and setup testing infrastructure
 1. Run Docker Compose: ```docker-compose up -d```
