@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "weather-forecast": "artillery run ./WebAPI/weather-forecast.yml"
+    "weather-forecast": "artillery run ./WebAPI/weather-forecast.yml",
+    "playwright-blazor-demo": "artillery run ./playwright/mudblazor.yml"
   },
   "keywords": [],
   "author": "",
   "license": "GPL-3.0 License",
   "dependencies": {
-    "artillery": "^2.0.0-38",
-    "artillery-plugin-publish-metrics": "^2.8.0"
+    "artillery": "^2.0.23",
+    "artillery-plugin-metrics-by-endpoint": "^1.17.0",
+    "artillery-plugin-publish-metrics": "^2.28.0",
+    "jest": "^30.0.0"
   }
 }

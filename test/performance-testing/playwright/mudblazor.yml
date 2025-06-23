@@ -1,0 +1,20 @@
+config:
+  target: "https://mudblazor.com/"
+  engines:
+    playwright: {}
+  processor: './flow.js'
+  plugins:
+    metrics-by-endpoint: {}
+  phases:
+    - duration: 30
+      arrivalRate: 5
+      name: Warm Up
+  
+scenarios:
+  - engine: playwright
+    testFunction: homePage
+
+  # - name: "Visit Home page"
+  #   flow:
+  #     - get:
+  #         url: "/"
